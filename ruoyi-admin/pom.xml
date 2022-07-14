@@ -212,6 +212,29 @@
                 </configuration>
             </plugin>
 
+
+
+            <!--            将dockerfile打包成docker镜像-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.13</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--                    mvn package dockerfile:build，如果是多模块的话,mvn install-->
+                    <repository>registry.cn-hangzhou.aliyuncs.com/itworkzhang/ruoyi</repository>
+                    <tag>${project.version}</tag>
+                </configuration>
+            </plugin>
+
         </plugins>
         <finalName>${project.artifactId}</finalName>
     </build>
