@@ -8,8 +8,10 @@ import { isRelogin } from '@/utils/request'
 
 NProgress.configure({ showSpinner: false })
 
+//免登陆白名单
 const whiteList = ['/login', '/auth-redirect', '/bind', '/register']
 
+//router前置守卫
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
@@ -51,6 +53,8 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+
+//router后置钩子
 router.afterEach(() => {
   NProgress.done()
 })
