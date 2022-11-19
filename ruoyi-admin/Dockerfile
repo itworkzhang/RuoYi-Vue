@@ -1,4 +1,4 @@
-FROM java
+FROM openjdk
 MAINTAINER itworkzhang@163.com
 WORKDIR /
 COPY ./target/ruoyi-admin.jar ./
