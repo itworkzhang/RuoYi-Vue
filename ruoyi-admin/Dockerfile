@@ -1,4 +1,4 @@
-FROM openjdk
+FROM cytomine/java8
 MAINTAINER itworkzhang@163.com
 WORKDIR /
 COPY ./target/ruoyi-admin.jar ./
