@@ -90,7 +90,7 @@
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",
-                        "rest": "%message"
+                        "rest": "%msg"
                         }
                     </pattern>
                 </pattern>

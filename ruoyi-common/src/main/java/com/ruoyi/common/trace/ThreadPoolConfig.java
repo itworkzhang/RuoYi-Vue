@@ -1,11 +1,11 @@
 package com.ruoyi.common.trace;
 
+import com.ruoyi.common.utils.Threads;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 线程池配置
@@ -39,4 +39,23 @@ public class ThreadPoolConfig {
         return threadPoolExecutor;
     }
 
+
+    /**
+     * 执行周期性或定时任务
+     */
+    @Bean(name = "scheduledExecutorService")
+    protected ScheduledExecutorService scheduledExecutorService()
+    {
+        return new ScheduledThreadPoolExecutor(corePoolSize,
+                new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
+                new ThreadPoolExecutor.CallerRunsPolicy())
+        {
+            @Override
+            protected void afterExecute(Runnable r, Throwable t)
+            {
+                super.afterExecute(r, t);
+                Threads.printException(r, t);
+            }
+        };
+    }
 }
