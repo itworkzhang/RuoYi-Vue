@@ -15,9 +15,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * 启动程序
  * 文档地址:http://doc.ruoyi.vip/ruoyi-vue/
+ *
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @Configuration
 @EnableApolloConfig
 public class RuoYiApplication {
@@ -32,7 +33,7 @@ public class RuoYiApplication {
     }
 
     @PostConstruct
-    public void test(){
-        threadPoolExecutor.submit(()->logger.info("test"));
+    public void test() {
+        threadPoolExecutor.submit(() -> logger.info("test"));
     }
 }

@@ -33,9 +33,9 @@ public class ThreadPoolConfig {
      * @return the thread pool executor
      */
     @Bean(name = "threadPoolExecutorMdcWrapper")
-    public ThreadPoolExecutor threadPoolExecutor(){
-        ThreadPoolExecutor threadPoolExecutor=new ThreadPoolExecutorMdcWrapper(corePoolSize,maxPoolSize,keepAliveSeconds,
-                TimeUnit.SECONDS,new ArrayBlockingQueue<>(queueCapacity),new ThreadPoolExecutor.CallerRunsPolicy());
+    public ThreadPoolExecutor threadPoolExecutor() {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutorMdcWrapper(corePoolSize, maxPoolSize, keepAliveSeconds,
+                TimeUnit.SECONDS, new ArrayBlockingQueue<>(queueCapacity), new ThreadPoolExecutor.CallerRunsPolicy());
         return threadPoolExecutor;
     }
 
@@ -44,15 +44,12 @@ public class ThreadPoolConfig {
      * 执行周期性或定时任务
      */
     @Bean(name = "scheduledExecutorService")
-    protected ScheduledExecutorService scheduledExecutorService()
-    {
+    protected ScheduledExecutorService scheduledExecutorService() {
         return new ScheduledThreadPoolExecutor(corePoolSize,
                 new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
-                new ThreadPoolExecutor.CallerRunsPolicy())
-        {
+                new ThreadPoolExecutor.CallerRunsPolicy()) {
             @Override
-            protected void afterExecute(Runnable r, Throwable t)
-            {
+            protected void afterExecute(Runnable r, Throwable t) {
                 super.afterExecute(r, t);
                 Threads.printException(r, t);
             }

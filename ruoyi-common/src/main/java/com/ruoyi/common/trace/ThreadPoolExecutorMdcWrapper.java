@@ -70,14 +70,17 @@ public class ThreadPoolExecutorMdcWrapper extends ThreadPoolExecutor {
     public void execute(Runnable task) {
         super.execute(ThreadMdcUtil.wrap(task, MDC.getCopyOfContextMap()));
     }
+
     @Override
     public <T> Future<T> submit(Runnable task, T result) {
         return super.submit(ThreadMdcUtil.wrap(task, MDC.getCopyOfContextMap()), result);
     }
+
     @Override
     public <T> Future<T> submit(Callable<T> task) {
         return super.submit(ThreadMdcUtil.wrap(task, MDC.getCopyOfContextMap()));
     }
+
     @Override
     public Future<?> submit(Runnable task) {
         return super.submit(ThreadMdcUtil.wrap(task, MDC.getCopyOfContextMap()));

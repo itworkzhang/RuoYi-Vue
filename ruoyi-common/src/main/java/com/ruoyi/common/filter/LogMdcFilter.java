@@ -11,6 +11,7 @@ import java.io.IOException;
 /**
  * MDC过滤器
  * 前端的所有请求都有带上traceId
+ *
  * @author Administrator
  */
 public class LogMdcFilter implements Filter {
@@ -22,7 +23,7 @@ public class LogMdcFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req= (HttpServletRequest) request;
+        HttpServletRequest req = (HttpServletRequest) request;
         //如果有上层调用就用上层的ID
         String traceId = req.getHeader(Constants.TRACE_ID);
         if (traceId == null) {

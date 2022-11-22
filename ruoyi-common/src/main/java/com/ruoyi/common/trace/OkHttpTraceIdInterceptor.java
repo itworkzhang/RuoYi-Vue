@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * 给使用OkHttp请求接口的方式统一加上traceId的header
+ *
  * @author Administrator
  */
 public class OkHttpTraceIdInterceptor implements Interceptor {

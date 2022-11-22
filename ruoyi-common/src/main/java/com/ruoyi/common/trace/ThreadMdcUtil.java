@@ -13,6 +13,7 @@ public class ThreadMdcUtil {
             MDC.put(Constants.TRACE_ID, IdUtils.fastUUID());
         }
     }
+
     public static <T> Callable<T> wrap(final Callable<T> callable, final Map<String, String> context) {
         return () -> {
             if (context == null) {
@@ -28,6 +29,7 @@ public class ThreadMdcUtil {
             }
         };
     }
+
     public static Runnable wrap(final Runnable runnable, final Map<String, String> context) {
         return () -> {
             if (context == null) {
