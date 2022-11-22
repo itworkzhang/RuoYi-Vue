@@ -2,8 +2,9 @@
 <configuration>
     <!-- 日志存放路径 -->
 	<property name="log.path" value="/home/ruoyi/logs" />
+    <property name="logstash.url" value="192.168.0.117:4560" />
     <!-- 日志输出格式 -->
-	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread][%X{traceId}] %-5level %logger{20} - [%method,%line] - %msg%n" />
 
 	<!-- 控制台输出 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,7 +12,7 @@
 			<pattern>${log.pattern}</pattern>
 		</encoder>
 	</appender>
-	
+
 	<!-- 系统日志输出 -->
 	<appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	    <file>${log.path}/sys-info.log</file>
@@ -34,7 +35,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
 	</appender>
-	
+
 	<appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	    <file>${log.path}/sys-error.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
@@ -56,7 +57,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
-	
+
 	<!-- 用户访问日志输出  -->
     <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${log.path}/sys-user.log</file>
@@ -73,7 +74,7 @@
 
     <!--logstash配置-->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>192.168.0.117:4560</destination>
+        <destination>${logstash.url}</destination>
         <!-- 日志输出编码 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
@@ -84,6 +85,7 @@
                     <pattern>
                         {
                         "logLevel": "%level",
+                        "traceId": "%X{traceId}",
                         "serviceName": "${springAppName:-}",
                         "pid": "${PID:-}",
                         "thread": "%thread",
@@ -106,16 +108,16 @@
 	<root level="info">
 		<appender-ref ref="console" />
 	</root>
-	
+
 	<!--系统操作日志-->
     <root level="info">
         <appender-ref ref="LOGSTASH" />
         <appender-ref ref="file_info" />
         <appender-ref ref="file_error" />
     </root>
-	
+
 	<!--系统用户操作日志-->
     <logger name="sys-user" level="info">
         <appender-ref ref="sys-user"/>
     </logger>
-</configuration> 
+</configuration>
