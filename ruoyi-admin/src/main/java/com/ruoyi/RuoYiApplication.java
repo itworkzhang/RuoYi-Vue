@@ -1,6 +1,5 @@
 package com.ruoyi;
 
-import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +19,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @Configuration
-@EnableApolloConfig
 public class RuoYiApplication {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
